@@ -33,12 +33,6 @@ $CODEX_HOME/skills/godogen
 $CODEX_HOME/skills/godot-task
 ```
 
-On this machine that path is typically:
-
-```text
-C:\Users\sho\.codex\skills\
-```
-
 ## Suggested Runtime Requirements
 
 - Godot 4.x console executable available on `PATH`, or use its absolute path
@@ -71,4 +65,4 @@ This repository is a modified port, not the original project.
 
 ## License
 
-This repository is distributed under the MIT License. See [LICENSE](/Users/sho/OneDrive/ドキュメント/godogen-codex-port/LICENSE).
+This repository is distributed under the MIT License. See `LICENSE`.
