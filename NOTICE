@@ -1,0 +1,18 @@
+This repository contains a modified Codex-oriented port of material from:
+
+  https://github.com/htdt/godogen
+
+Original work:
+
+  godogen
+  Copyright 2026 Alex Ermolov
+  Licensed under the MIT License
+
+Port and modifications in this repository include:
+
+- adapting skill instructions for Codex
+- removing Claude-specific invocation and context assumptions
+- adding Windows and PowerShell execution guidance
+- packaging skill folders for Codex installation layout
+
+The upstream project and this repository are not the same distribution.
