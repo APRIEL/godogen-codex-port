@@ -20,6 +20,11 @@ from google.genai import types
 
 STATIC_PROMPT = Path(__file__).parent / "static_prompt.md"
 DYNAMIC_PROMPT = Path(__file__).parent / "dynamic_prompt.md"
+MODEL_CANDIDATES = [
+    "gemini-3-flash-preview",
+    "gemini-2.5-flash",
+    "gemini-flash-latest",
+]
 
 
 def main():
@@ -40,7 +45,7 @@ def main():
             sys.exit(1)
 
     static = len(paths) == 2
-    prompt = (STATIC_PROMPT if static else DYNAMIC_PROMPT).read_text()
+    prompt = (STATIC_PROMPT if static else DYNAMIC_PROMPT).read_text(encoding="utf-8")
     if context:
         prompt += f"\n\n## Task Context\n\n{context}\n"
 
@@ -60,17 +65,25 @@ def main():
             contents.append(types.Part.from_bytes(data=p.read_bytes(), mime_type="image/png"))
         desc = f"dynamic (reference + {len(paths) - 1} frames)"
 
-    print(f"Analyzing {desc} with Gemini 3 Flash...", file=sys.stderr)
-    try:
-        response = client.models.generate_content(
-            model="gemini-3-flash-preview",
-            contents=contents,  # type: ignore[arg-type]
-            config=types.GenerateContentConfig(
-                media_resolution=types.MediaResolution.MEDIA_RESOLUTION_HIGH,
-            ),
-        )
-    except Exception as e:
-        print(f"Error: Gemini API call failed: {e}", file=sys.stderr)
+    response = None
+    last_error = None
+    for model_name in MODEL_CANDIDATES:
+        print(f"Analyzing {desc} with {model_name}...", file=sys.stderr)
+        try:
+            response = client.models.generate_content(
+                model=model_name,
+                contents=contents,  # type: ignore[arg-type]
+                config=types.GenerateContentConfig(
+                    media_resolution=types.MediaResolution.MEDIA_RESOLUTION_HIGH,
+                ),
+            )
+            break
+        except Exception as e:
+            last_error = e
+            print(f"Warning: model {model_name} failed: {e}", file=sys.stderr)
+
+    if response is None:
+        print(f"Error: Gemini API call failed: {last_error}", file=sys.stderr)
         sys.exit(1)
 
     if not response.text:

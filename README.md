@@ -38,7 +38,13 @@ $CODEX_HOME/skills/godot-task
 - Godot 4.x console executable available on `PATH`, or use its absolute path
 - Python 3 available as `py -3` on Windows
 - `ffmpeg` available for AVI to MP4 conversion
-- any API keys required by the bundled asset-generation or visual-QA scripts
+- any API keys required by the bundled asset-generation or visual-QA scripts, set locally in your shell environment
+
+## Security
+
+- Do not commit API keys, tokens, or generated secrets to this repository
+- Set `GOOGLE_API_KEY` or `GEMINI_API_KEY` locally when running visual QA
+- If you accidentally expose a real key anywhere public, rotate it before publishing
 
 ## Repository Layout
 

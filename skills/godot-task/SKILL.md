@@ -63,6 +63,8 @@ Use a single task block from `PLAN.md`, for example:
 10. Read `test-harness.md` and write `test/test_{task_id}.gd`.
 11. Capture screenshots or video evidence.
 12. Read `visual-qa.md` and run automated QA when applicable.
+   - On Windows, prefer `scripts/run_visual_qa.ps1` rather than manually composing a long Python command.
+   - If `PLAN.md` exists, prefer `scripts/run_task_visual_qa.ps1` so the task context is derived automatically.
 13. If verification fails, iterate.
 14. Save evidence paths and write useful discoveries to `MEMORY.md`.
 
